@@ -1,0 +1,18 @@
+﻿@page "/element/button"
+
+<Button>Default</Button>
+<Button Color="Color.Primary" CssClass="@(new[] { "a" ,"b"})" Styles="@(new StyleCollection
+                                                                        {
+                                                                            ["a"]="b"
+                                                                        })">Primary</Button>
+<Button Color="Color.Secondary" CssClass="@(new[] { CssUtil.H1,"a"})" Styles="@(new []{ 
+                                                                                    ("a","b"),
+                                                                                    ("x","q")
+                                                                                })">Secondary</Button>
+<Button Color="Color.Info" Styles="@("a:b;c:c")">Info</Button>
+<Button Color="Color.Warning">Warning</Button>
+<Button Color="Color.Success">Success</Button>
+<Button Color="Color.Danger">Danger</Button>
+<Button Color="Color.Light">Light</Button>
+<Button Color="Color.Dark" >Dark</Button>
+

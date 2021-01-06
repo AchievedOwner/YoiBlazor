@@ -4,24 +4,25 @@ using Microsoft.AspNetCore.Components;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 定义组件具有任意 UI 内容的参数。
+    /// Represents the component could has the UI content of child.
     /// </summary>
-    public interface IHasChildContent
+    public interface IHasChildContent : IBlazorComponent
     {
         /// <summary>
-        /// 设置组件的一段 UI 内容。
+        /// Sets the segment of UI content.
         /// </summary>
         RenderFragment ChildContent { get; set; }
     }
 
     /// <summary>
-    /// 定义组件具有指定 <typeparamref name="TValue"/> 类型的任意 UI 内容的参数。
+    /// Represents the component could has the UI content of child with type of <see cref="TValue"/>.
     /// </summary>
-    /// <typeparam name="TValue">对象的类型。</typeparam>
-    public interface IHasChildContent<TValue>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <seealso cref="YoiBlazor.IBlazorComponent" />
+    public interface IHasChildContent<TValue> : IBlazorComponent
     {
         /// <summary>
-        /// 设置类型为 <typeparamref name="TValue"/> 的对象的一段 UI 内容。
+        /// Sets the segment of UI content by given <typeparamref name="TValue"/> type.
         /// </summary>
         RenderFragment<TValue> ChildContent { get; set; }
     }

@@ -6,16 +6,16 @@ using System.Linq;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示具有一组的 <see cref="CssClass"/> 类型的值的集合。
+    /// Represents a collection of CSS class string.
     /// </summary>
-    public class CssClassCollection :IReadOnlyList<CssClass>,IReadOnlyCollection<CssClass>, IEnumerable<string>
+    public class CssClassCollection : IReadOnlyList<CssClass>, IReadOnlyCollection<CssClass>, IEnumerable<string>
     {
         private readonly List<CssClass> cssClassList = new List<CssClass>();
 
         /// <summary>
-        /// 初始化 <see cref="CssClassCollection"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="CssClassCollection"/> class.
         /// </summary>
-        /// <param name="cssClass">一组 <see cref="CssClass"/> 类型。</param>
+        /// <param name="cssClass">A group of <see cref="CssClass"/> class.</param>
         public CssClassCollection(IEnumerable<object> cssClass)
         {
             foreach (var item in cssClass)
@@ -25,9 +25,13 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 获取指定索引的 <see cref="CssClass"/> 类型。
+        /// Gets the <see cref="CssClass"/> at the specified index.
         /// </summary>
-        /// <param name="index">索引。</param>
+        /// <value>
+        /// The <see cref="CssClass"/>.
+        /// </value>
+        /// <param name="index">The index.</param>
+        /// <returns>The instance of <see cref="CssClass"/>.</returns>
         public CssClass this[int index]
         {
             get
@@ -37,7 +41,7 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 获取集合的总数。
+        /// Gets the number of elements in the collection.
         /// </summary>
         public int Count => cssClassList.Count;
 
@@ -51,7 +55,7 @@ namespace YoiBlazor
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
-        /// 转换成以空格分隔的字符串。
+        /// Converts to string seperated by space of each item.
         /// </summary>
         /// <returns>
         /// A <see cref="System.String" /> that represents this instance.
@@ -84,17 +88,19 @@ namespace YoiBlazor
         {
             return cssClassList.GetEnumerator();
         }
-
         /// <summary>
-        /// 获取 <see cref="CssClass"/> 集合。
+        /// Gets the CSS classes.
         /// </summary>
+        /// <value>
+        /// The CSS classes.
+        /// </value>
         public IEnumerable<CssClass> CssClasses => cssClassList;
 
         /// <summary>
-        /// 添加指定的 <see cref="CssClass"/> 项。
+        /// Adds the specified item.
         /// </summary>
-        /// <param name="item">要添加的项。</param>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> 是 <c>null</c>。</exception>
+        /// <param name="item">The item.</param>
+        /// <exception cref="ArgumentNullException">item</exception>
         public void Add(CssClass item)
         {
             if (item is null)
@@ -106,11 +112,10 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加满足指定条件的 <see cref="CssClass"/> 项。
+        /// Adds the css class by specified condition.
         /// </summary>
-        /// <param name="condition"><c>true</c> 表示条件满足。</param>
-        /// <param name="item">要添加的项。</param>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> 是 <c>null</c>。</exception>
+        /// <param name="condition">if set to <c>true</c> [condition].</param>
+        /// <param name="item">The item.</param>
         public void Add(bool condition, CssClass item)
         {
             if (condition)
@@ -120,10 +125,13 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 执行从 <see cref="System.String"/> 到 <see cref="CssClassCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="System.Object[]"/> to <see cref="CssClassCollection"/>.
         /// </summary>
-        /// <param name="cssClass">css 类名称数组。</param>
-        /// <exception cref="System.ArgumentNullException"><paramref name="cssClass"/> 是 null。</exception>
+        /// <param name="cssClass">The CSS class.</param>
+        /// <returns>
+        /// The result of the conversion.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">cssClass</exception>
         public static implicit operator CssClassCollection(object[] cssClass)
         {
             if (cssClass is null)
@@ -135,19 +143,25 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 执行从 <see cref="System.String"/> 到 <see cref="CssClassCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="CssClassCollection"/>.
         /// </summary>
-        /// <param name="cssClass">具有空格分隔的类名称。</param>
+        /// <param name="cssClass">The CSS class.</param>
+        /// <returns>
+        /// The result of the conversion.
+        /// </returns>
         public static implicit operator CssClassCollection(string cssClass)
         {
             return new CssClassCollection(cssClass.Split(' '));
         }
 
         /// <summary>
-        /// 执行从 <see cref="CssClass"/> 到 <see cref="CssClassCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="CssClass[]"/> to <see cref="CssClassCollection"/>.
         /// </summary>
-        /// <param name="cssClass"><see cref="CssClass"/> 类型数组。</param>
-        /// <exception cref="System.ArgumentNullException"><paramref name="cssClass"/> 是 null。</exception>
+        /// <param name="cssClass">The CSS class.</param>
+        /// <returns>
+        /// The result of the conversion.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">cssClass</exception>
         public static implicit operator CssClassCollection(CssClass[] cssClass)
         {
             if (cssClass is null)
@@ -157,12 +171,14 @@ namespace YoiBlazor
 
             return new CssClassCollection(cssClass);
         }
-
         /// <summary>
-        /// 执行从 <see cref="CssClass"/> 到 <see cref="CssClassCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="CssClass"/> to <see cref="CssClassCollection"/>.
         /// </summary>
-        /// <param name="cssClass"><see cref="CssClass"/> 类型。</param>
-        /// <exception cref="System.ArgumentNullException"><paramref name="cssClass"/> 是 null。</exception>
+        /// <param name="cssClass">The CSS class.</param>
+        /// <returns>
+        /// The result of the conversion.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">cssClass</exception>
         public static implicit operator CssClassCollection(CssClass cssClass)
         {
             if (cssClass is null)

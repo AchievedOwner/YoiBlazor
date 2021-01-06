@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{AE7817E2-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoiBlazor.BlazorServer", "demo\YoiBlazor.BlazorServer\YoiBlazor.BlazorServer.csproj", "{9EACAA4D-199B-4228-A52D-F9CF61363AE6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7A11A2F0-E10E-4E92-B222-47ED8E6086D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,7 +44,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{672110AE-E833-4233-B872-EBE0FC93EAC8} = {987FAED6-B40D-4938-8E07-D87C080C4732}
-		{3D8B32D6-63AE-4AA9-95C2-060AD332EA9F} = {987FAED6-B40D-4938-8E07-D87C080C4732}
+		{3D8B32D6-63AE-4AA9-95C2-060AD332EA9F} = {7A11A2F0-E10E-4E92-B222-47ED8E6086D1}
 		{9EACAA4D-199B-4228-A52D-F9CF61363AE6} = {AE7817E2-E029-4AD1-B637-3529E0B0C3D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

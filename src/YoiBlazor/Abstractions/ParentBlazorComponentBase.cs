@@ -6,35 +6,41 @@ using Microsoft.AspNetCore.Components.Rendering;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示嵌套组件的父组件的基类。这是一个抽象类。
+    /// Represents the base class of parent blazor component.
     /// </summary>
-    /// <typeparam name="TParentComponent">父组件类型。</typeparam>
-    public abstract class ParentBlazorComponentBase<TParentComponent>:BlazorComponentBase,IHasChildContent
+    /// <typeparam name="TParentComponent">The type of the parent component.</typeparam>
+    /// <seealso cref="YoiBlazor.BlazorComponentBase" />
+    /// <seealso cref="YoiBlazor.IHasChildContent" />
+    public abstract class ParentBlazorComponentBase<TParentComponent> : BlazorComponentBase, IHasChildContent
         where TParentComponent: IComponent
     {
         /// <summary>
-        /// 设置 <typeparamref name="TParentComponent"/> 组件的内容。
+        /// Sets the segment of UI content.
         /// </summary>
         [Parameter] public RenderFragment ChildContent { get; set; }
 
         /// <summary>
-        /// 用于存储子组件的列表。
+        /// The child components
         /// </summary>
         private readonly List<IComponent> _childComponents = new List<IComponent>();
 
         /// <summary>
-        /// 获取该父组件包含的子组件列表。
+        /// Gets the child components.
         /// </summary>
         public IList<IComponent> ChildComponents => _childComponents;
 
         /// <summary>
-        /// 获取元素的名称。默认是 div。
+        /// Gets the name of the element.
         /// </summary>
         protected virtual string ElementName => "div";
+
+        /// <summary>
+        /// Gets or sets the index of the actived.
+        /// </summary>
         public int ActivedIndex { get; protected set; } = -1;
 
         /// <summary>
-        /// 使用 <see cref="RenderTreeBuilder"/> 创建父组件的 <see cref="CascadingValue{TComponent}"/> 组件。
+        /// Renders the component to the supplied <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" />.
         /// </summary>
         /// <param name="builder">A <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" /> that will receive the render output.</param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -49,11 +55,10 @@ namespace YoiBlazor
             builder.CloseElement();
         }
 
-
         /// <summary>
-        /// 添加指定的子组件。
+        /// Adds the specified component.
         /// </summary>
-        /// <param name="component">子组件。</param>
+        /// <param name="component">The component.</param>
         public virtual void Add(IComponent component)
         {
             _childComponents.Add(component);

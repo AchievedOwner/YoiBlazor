@@ -15,14 +15,14 @@ namespace YoiBlazor.Test
             _context = new TestContext();
         }
 
-        [Fact(DisplayName ="CssClassAttribute 特性")]
+        [Fact(DisplayName ="CssClassAttribute")]
         public void TestCssClass()
         {
             var component = _context.RenderComponent<TestComponent>(Parameter(nameof(TestComponent.Margin),1));
             component.MarkupMatches("<div class=\"m-1\"/>");
         }
 
-        [Fact(DisplayName = "NullCssClassAttribute 特性")]
+        [Fact(DisplayName = "NullCssClassAttribute")]
         public void TestNullCssClass()
         {
             var component = _context.RenderComponent<TestComponent>(Parameter(nameof(TestComponent.Margin), 1));
@@ -33,7 +33,7 @@ namespace YoiBlazor.Test
             component.MarkupMatches("<div />");
         }
 
-        [Fact(DisplayName ="BooleanCssClassAttribute 特性")]
+        [Fact(DisplayName ="BooleanCssClassAttribute")]
         public void TestBoolCssClassAttribute()
         {
             var component = _context.RenderComponent<TestComponent>(Parameter(nameof(TestComponent.Text), true));
@@ -44,35 +44,35 @@ namespace YoiBlazor.Test
             component.MarkupMatches("<div class=\"text-0\"/>");
         }
 
-        [Fact(DisplayName ="参数是 CssClass 类型")]
+        [Fact(DisplayName ="Parameter is CssClass")]
         public void TestCssClassType()
         {
             var component = _context.RenderComponent<TestComponent>(Parameter(nameof(TestComponent.Color), Color.Primary));
             component.MarkupMatches("<div class=\"primary\"/>");
         }
 
-        [Fact(DisplayName ="参数是 CssClass 的派生类")]
+        [Fact(DisplayName = "Parameter is CssClass by driving class")]
         public void TestCssClass_WithInheritType()
         {
             var component = _context.RenderComponent<TestComponent>(Parameter(nameof(TestComponent.BgColor), BgColor.Primary));
             component.MarkupMatches("<div class=\"bg-primary\"/>");
         }
 
-        [Fact(DisplayName ="参数是 CssClassCollection 类型")]
+        [Fact(DisplayName = "Parameter is CssClassCollection")]
         public void TestCssClassCollection()
         {
             var component = _context.RenderComponent<TestComponent>(Parameter(nameof(TestComponent.RounedStyles), new CssClassCollection(new[] { "a", "b" })));
             component.MarkupMatches("<div class=\"rounded-a rounded-b\"/>");
         }
 
-        [Fact(DisplayName ="参数标记了 StyleAttribute")]
+        [Fact(DisplayName = "Parameter has StyleAttribute")]
         public void TestStyleAttribute()
         {
             var component = _context.RenderComponent<TestComponent>(Parameter(nameof(TestComponent.MaxHeight), 120));
             component.MarkupMatches("<div style=\"max-height:120\"/>");
         }
 
-        [Fact(DisplayName ="ElementReference 属性")]
+        [Fact(DisplayName ="ElementReference")]
         public void TestElementReference()
         {
             var compoent= _context.RenderComponent<TestComponent>();

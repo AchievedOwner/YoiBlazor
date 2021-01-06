@@ -3,14 +3,14 @@
 namespace YoiBlazor
 {
     /// <summary>
-    /// 定义组件的参数使用的 CSS 类名称。
+    /// Represents the CSS class name.
     /// </summary>
-    /// <seealso cref="System.Attribute" />
+    /// <seealso cref="System.ComponentModel.DefaultValueAttribute" />
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = false, Inherited = true)]
     public class CssClassAttribute : System.ComponentModel.DefaultValueAttribute
     {
         /// <summary>
-        /// 初始化 <see cref="CssClassAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="CssClassAttribute"/> class.
         /// </summary>
         public CssClassAttribute() : this(string.Empty)
         {
@@ -18,20 +18,23 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 初始化 <see cref="CssClassAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="CssClassAttribute"/> class by specified CSS class name.
         /// </summary>
-        /// <param name="cssClass">Css 类名称。</param>
+        /// <param name="cssClass">The CSS class.</param>
         public CssClassAttribute(string cssClass) : base(cssClass)
         {
         }
 
         /// <summary>
-        /// 获取或设置 CSS 特性的加载顺序，数字越小排列越靠前。
+        /// Gets or sets the order of the css name that sort from small to large while loading.
         /// </summary>
         public int Order { get; set; }
         /// <summary>
-        /// 设置 CSS 类名称作为值的后缀。
+        /// Gets or sets a value indicating whether this <see cref="CssClassAttribute"/> is suffix.
         /// </summary>
+        /// <value>
+        ///   <c>true</c> if suffix; otherwise, <c>false</c>.
+        /// </value>
         public bool Suffix { get; set; }
     }
 }

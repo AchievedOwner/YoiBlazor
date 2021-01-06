@@ -3,33 +3,31 @@
 namespace YoiBlazor
 {
     /// <summary>
-    /// 定义组件构造为基本的内容型的元素。例如 div span。
-    /// 必须实现 <see cref="IHasChildContent"/> 接口。
+    /// Represents the component class could generate the HTML tag with specify name.
     /// </summary>
     /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed class HtmlTagAttribute : Attribute
     {
         /// <summary>
-        /// 使用 div 作为元素的名称初始化 <see cref="HtmlTagAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="HtmlTagAttribute"/> class by 'div' tag.
         /// </summary>
         public HtmlTagAttribute() : this("div")
         {
 
         }
-
         /// <summary>
-        /// 使用 html 的元素名称初始化 <see cref="HtmlTagAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="HtmlTagAttribute"/> class by specify tag name.
         /// </summary>
-        /// <param name="elementName">元素的名称。</param>
-        public HtmlTagAttribute(string elementName)
+        /// <param name="tagName">Name of the HTML tag.</param>
+        public HtmlTagAttribute(string tagName)
         {
-            ElementName = elementName;
+            TagName = tagName;
         }
 
         /// <summary>
-        /// 获取元素的名称。
+        /// Gets the name of the tag.
         /// </summary>
-        public string ElementName { get; }
+        public string TagName { get; }
     }
 }

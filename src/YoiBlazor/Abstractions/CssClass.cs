@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Net.Http.Headers;
 
 namespace YoiBlazor
 {
-
     /// <summary>
-    /// 表示一种具备 <c>class</c> 类样式名称的类型。
+    /// Represents the enumeration type of css class.
     /// </summary>
     public class CssClass
     {
         /// <summary>
-        /// 初始化 <see cref="CssClass"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="CssClass"/> class.
         /// </summary>
         protected CssClass()
         {
@@ -18,21 +16,21 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 初始化 <see cref="CssClass"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="CssClass"/> class.
         /// </summary>
-        /// <param name="cssClass">类样式。支持 <see cref="String"/>、<see cref="Enum"/> 或 <see cref="CssClass"/> 类型。</param>
+        /// <param name="cssClass">The CSS class that only support the instance of <see cref="CssClass"/>, <see cref="CssClassCollection"/></param>
         public CssClass(object cssClass)
         {
             Name = cssClass;
         }
 
         /// <summary>
-        /// 获取类样式名称。
+        /// Gets the name of css class.
         /// </summary>
         public object Name { get; }
 
         /// <summary>
-        /// 根据不同类型的 <see cref="Name"/> 转换成相应的字符串。
+        /// Converts to string.
         /// </summary>
         /// <returns>
         /// A <see cref="System.String" /> that represents this instance.
@@ -43,25 +41,24 @@ namespace YoiBlazor
             _ => Name?.ToString(),
         };
 
-
         /// <summary>
-        /// 执行从 <see cref="System.String"/> 类型到 <see cref="CssClass"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="CssClass"/>.
         /// </summary>
-        /// <param name="name">类样式名称。</param>
+        /// <param name="name">The name.</param>
         /// <returns>
-        /// 转换的结果。
+        /// The result of the conversion.
         /// </returns>
         public static implicit operator CssClass(string name)
             =>new CssClass(name);
 
         /// <summary>
-        /// 执行从 <see cref="Enum"/> 类型到 <see cref="CssClass"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="Enum"/> to <see cref="CssClass"/>.
         /// </summary>
-        /// <param name="item">枚举项。</param>
+        /// <param name="item">The item.</param>
         /// <returns>
-        /// 转换的结果。
+        /// The result of the conversion.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> 是 null。</exception>
+        /// <exception cref="ArgumentNullException">item</exception>
         public static implicit operator CssClass(Enum item)
         {
             if (item == null)

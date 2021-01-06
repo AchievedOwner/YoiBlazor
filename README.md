@@ -1,14 +1,7 @@
-﻿# YoiBlazor(用极简的方式构建 Blazor 组件)
-如果你想要一个能快速开发出基于已经存在的样式的 Blazor UI 组件库，那么 YoiBlazor 可以使你事半功倍。
+﻿# YoiBlazor
+The simpliest way to build the component.
 
-Yoi 源自于日语，意思是容易。
-
-#### 构建组件只需3步
-1. 继承 `BlazorComponentBase`
-2. 在参数上设置 `CssClassAttribute` 特性
-3. 组件类打上 `HtmlTag` 特性
-
-### 定义组件
+### Build component
 ```csharp
 [HtmlTag]
 public class Container : BlazorComponentBase, IHasChildContent
@@ -18,20 +11,20 @@ public class Container : BlazorComponentBase, IHasChildContent
     [Parameter][CssClass("container-fluid")][FalseCssClass("container")] public bool? Fluid { get; set; }
 }
 ```
-### 使用组件
+### Use component
 ```html
 <Container>...</Container>
 <Container Fluid="true">...</Container>
 ```
-### 查看HTML
+### Check HTML
 ```html
 <div class="container">...</div>
 <div class="container-fluid">...</div>
 ```
 
 
-## 安装(v2.0.0)
+## Installation(v2.1.0)
 > Install-Package YoiBlazor
 
 
-[查看文档](https://github.com/DotNetStacker/YoiBlazor/wiki)
+### [See Document](https://github.com/AchievedOwner/YoiBlazor/wiki)

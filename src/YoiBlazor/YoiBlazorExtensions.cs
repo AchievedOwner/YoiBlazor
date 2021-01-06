@@ -5,15 +5,15 @@ using System.Reflection;
 namespace YoiBlazor
 {
     /// <summary>
-    /// YoiBlazor 的扩展。
+    /// The extensions of YoiBlazor.
     /// </summary>
     public static class YoiBlazorExtensions
     {
         /// <summary>
-        /// 获取指定枚举项定义的指定特性。
+        /// Gets the enum member value.
         /// </summary>
-        /// <typeparam name="TAttribute">特性类型。</typeparam>
-        /// <param name="enumeration">枚举项。</param>
+        /// <typeparam name="TAttribute">The type of the attribute.</typeparam>
+        /// <param name="enumeration">The enumeration.</param>
         /// <returns></returns>
         public static object GetEnumMemberValue<TAttribute>(this object enumeration) where TAttribute:DefaultValueAttribute
         {
@@ -38,11 +38,12 @@ namespace YoiBlazor
 			return attr.Value;
 		}
 
-		/// <summary>
-		/// 获取枚举项定义了 <see cref="CssClassAttribute"/> 特性的 CSS 名称。若未定义 <see cref="CssClassAttribute"/> 特性，则使用枚举项的名称。
-		/// </summary>
-		/// <param name="enumeration">枚举类型。</param>
-		public static string GetEnumCssClass(this object enumeration)
+        /// <summary>
+        /// Gets the <see cref="CssClassAttribute"/> value that defines in items of enum.
+        /// </summary>
+        /// <param name="enumeration">The enumeration.</param>
+        /// <returns></returns>
+        public static string GetEnumCssClass(this object enumeration)
 			=> GetEnumMemberValue<CssClassAttribute>(enumeration)?.ToString();
 	}
 }

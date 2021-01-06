@@ -3,23 +3,23 @@
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示参数自动适应到 <c>style</c> 样式中。
+    /// Represents the name of style that could apply after render.
     /// </summary>
     /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public sealed class StyleAttribute : Attribute
     {
         /// <summary>
-        /// 初始化 <see cref="StyleAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="StyleAttribute"/> class.
         /// </summary>
-        /// <param name="name">样式名称。</param>
+        /// <param name="name">The name of style.</param>
         public StyleAttribute(string name)
         {
             Name = name;
         }
 
         /// <summary>
-        /// 获取样式名称。
+        /// Gets the name of style.
         /// </summary>
         public string Name { get; }
     }

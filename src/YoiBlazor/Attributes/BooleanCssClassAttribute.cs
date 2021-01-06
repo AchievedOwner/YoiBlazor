@@ -3,25 +3,24 @@
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示当参数的布尔值为 <c>false</c> 需要应用的 CSS 类名称。
+    /// Represents the value of boolean argument which should apply the CSS name.
     /// </summary>
     /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class BooleanCssClassAttribute : CssClassAttribute
     {
         /// <summary>
-        /// 初始化 <see cref="BooleanCssClassAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="BooleanCssClassAttribute"/> class.
         /// </summary>
-        /// <param name="trueCssClass">当参数的值是 <c>true</c> 时应用的 CSS 名称。</param>
-        /// <param name="falseCssClass">当参数的值是 <c>false</c> 时应用的 CSS 名称。</param>
-        public BooleanCssClassAttribute(string trueCssClass,string falseCssClass):base(trueCssClass)
+        /// <param name="trueCssClass">The value is <c>true</c> to apply the name of CSS class.</param>
+        /// <param name="falseCssClass">The value is <c>true</c> to apply the name of CSS class.</param>
+        public BooleanCssClassAttribute(string trueCssClass, string falseCssClass) : base(trueCssClass)
         {
-            FaleCssClass = falseCssClass;
+            FalseCssClass = falseCssClass;
         }
-
         /// <summary>
-        /// 获取参数是 <c>false</c> 时的 CSS 类名称。
+        /// Gets the CSS class name while value is <c>false</c>.
         /// </summary>
-        public string FaleCssClass { get; }
+        public string FalseCssClass { get; }
     }
 }

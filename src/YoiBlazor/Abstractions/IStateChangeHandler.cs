@@ -1,12 +1,12 @@
 ﻿namespace YoiBlazor
 {
     /// <summary>
-    /// 提供对组件状态改变的通知。
+    /// Provide the notification of the state of component.
     /// </summary>
     public interface IStateChangeHandler
     {
         /// <summary>
-        /// 通知组件状态已更改。
+        /// Notifies the state of component has changed.
         /// </summary>
         void NotifyStateChanged();
     }

@@ -3,19 +3,20 @@
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示一个 Blazor 的 UI 组件。
+    /// Repreesents the blazor component.
     /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Components.IComponent" />
     public interface IBlazorComponent : IComponent
     {
         /// <summary>
-        /// 构造组件的 class 样式名称并用空格连接的字符串。
+        /// Builds the CSS class string.
         /// </summary>
-        /// <returns>用空格分割的样式字符串。</returns>
+        /// <returns>The string of CSS class seperated by space for each of items.</returns>
         string BuildCssClassString();
         /// <summary>
-        /// 构造组件的 style 的值并用“;”连接。
+        /// Builds the styles string.
         /// </summary>
-        /// <returns>用分号隔开的 style 样式。</returns>
+        /// <returns>The string of styles seperated by semicolon(;) for each of items.</returns>
         string BuildStylesString();
     }
 }

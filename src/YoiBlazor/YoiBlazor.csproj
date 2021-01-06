@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp5.0</TargetFramework>
+		<TargetFramework>netstandard2.1</TargetFramework>
 		<LangVersion>8.0</LangVersion>
-		<Authors>周大侠</Authors>
-		<Description>用极简的方式构建 Blazor 组件。</Description>
-		<Copyright>Copyright © 周大侠 2020</Copyright>
+		<Authors>AchievedOwner</Authors>
+		<Description>The simpliest way to build the component.</Description>
+		<Copyright>Copyright © AchievedOwner 2020</Copyright>
 		<PackageTags>Blazor Component RenderTreeBuilder</PackageTags>
 		<RepositoryType>Git</RepositoryType>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>2.0</Version>
-		<RepositoryUrl>https://github.com/DotNetStacker/YoiBlazor</RepositoryUrl>
-		<PackageProjectUrl>https://github.com/DotNetStacker/YoiBlazor</PackageProjectUrl>
+		<Version>2.1</Version>
+		<RepositoryUrl>https://github.com/AchievedOwner/YoiBlazor</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/AchievedOwner/YoiBlazor</PackageProjectUrl>
 		<PackageReleaseNotes></PackageReleaseNotes>
 	</PropertyGroup>
 
@@ -27,7 +27,6 @@
 		<DebugSymbols>false</DebugSymbols>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.0" />
 	</ItemGroup>
 </Project>

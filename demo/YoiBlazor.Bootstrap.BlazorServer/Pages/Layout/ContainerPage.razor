@@ -1,0 +1,33 @@
+﻿@page "/layout/container"
+
+
+<PageTitle>
+    <Title>容器(Containers)</Title>
+    <Description>
+        容器是引导程序的基本构建块，它包含、填充和对齐给定设备或视口中的内容。
+    </Description>
+</PageTitle>
+
+<h2>默认容器</h2>
+默认容器拥有固定的宽度。
+@Code.GetCode(@"
+```html
+<Container>
+    这里是内容
+</Container>
+```
+")
+
+<h2>响应式容器</h2>
+
+<Container BreakPoints="@(new[] { BreakPoint.Small, BreakPoint.Medium })"></Container>
+
+@Code.GetCode(@"
+```html
+<Container Responsive=""BreakPoint.Small"">100% wide until small breakpoint</Container>
+<Container Responsive=""BreakPoint.Medium"">100% wide until medium breakpoint</Container>
+<Container Responsive=""BreakPoint.Large"">100% wide until large breakpoint</Container>
+<Container Responsive=""BreakPoint.ExtralLarge"">100% wide until extra large breakpoint</Container>
+<Container Responsive=""BreakPoint.ExtralExtralLarge"">100% wide until extra extra large breakpoint</Container>
+```
+")

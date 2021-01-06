@@ -4,14 +4,14 @@ using System.Linq;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示用于快速构造 <see cref="CssClass"/> 的样式表。
+    /// Represents the CSS class builder.
     /// </summary>
     public class Css
     {
         private readonly List<string> _cssBuilder = new List<string>();
 
         /// <summary>
-        /// 创建 <see cref="Css"/> 链表。
+        /// Gets the instance of <see cref="Css"/> class.
         /// </summary>
         public static Css Create => new Css();
             
@@ -25,10 +25,10 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加指定 <see cref="CssClass"/> 实例。
+        /// Adds the specified <see cref="CssClass"/> instance.
         /// </summary>
-        /// <param name="cssClass"><see cref="CssClass"/> 实例。</param>
-        /// <exception cref="System.ArgumentNullException"><paramref name="cssClass"/> 是 <c>null</c>。</exception>
+        /// <param name="cssClass">The <see cref="CssClass"/> instance.</param>
+        /// <exception cref="System.ArgumentNullException">cssClass</exception>
         public Css Add(CssClass cssClass)
         {
             if (cssClass is null)
@@ -40,10 +40,10 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加满足指定条件的 <see cref="CssClass"/> 实例。
+        /// Adds the specified <see cref="CssClass"/> that satisfied by specify condition.
         /// </summary>
-        /// <param name="condition"><c>true</c> 表示条件满足。</param>
-        /// <param name="cssClass"><see cref="CssClass"/> 实例。</param>
+        /// <param name="condition">if set to <c>true</c> to add the <see cref="CssClass"/> instance.</param>
+        /// <param name="cssClass">The <see cref="CssClass"/> instance.</param>
         public Css Add(bool condition, CssClass cssClass)
         {
             if (condition)
@@ -54,10 +54,10 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加满足指定条件的 <see cref="CssClassCollection"/> 实例。
+        /// Adds the specified <see cref="CssClassCollection"/> that satisfied by specify condition.
         /// </summary>
-        /// <param name="condition"><c>true</c> 表示条件满足。</param>
-        /// <param name="cssClasses"><see cref="CssClassCollection"/> 实例。</param>
+        /// <param name="condition">if set to <c>true</c> to add the <see cref="CssClassCollection"/> instance.</param>
+        /// <param name="cssClasses">The <see cref="CssClassCollection"/> instance.</param>
         public Css Add(bool condition, CssClassCollection cssClasses)
         {
             if (cssClasses is null)
@@ -69,17 +69,17 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加指定 <see cref="CssClassCollection"/> 实例。
+        /// Adds the specified <see cref="CssClassCollection"/>.
         /// </summary>
-        /// <param name="cssClasses"><see cref="CssClassCollection"/> 实例。</param>
+        /// <param name="cssClasses">The <see cref="CssClassCollection"/> instance.</param>
         /// <exception cref="System.ArgumentNullException"><paramref name="cssClasses"/> 是 <c>null</c>。</exception>
         public Css Add(CssClassCollection cssClasses) => Add(true, cssClasses);
 
         /// <summary>
-        /// 添加满足条件的 CSS 的字符串数组。
+        /// Adds the specified CSS classes that satisfied by specify condition.
         /// </summary>
-        /// <param name="condition"><c>true</c> 表示条件满足。</param>
-        /// <param name="cssClasses">CSS 的字符串数组。</param>
+        /// <param name="condition">if set to <c>true</c> to add the css classes.</param>
+        /// <param name="cssClasses">The css classes.</param>
         public Css Add(bool condition,IEnumerable<string> cssClasses)
         {
             if (cssClasses is null)
@@ -95,18 +95,18 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加指定的 CSS 字符串数组。
+        /// Adds the specified CSS classes.
         /// </summary>
-        /// <param name="cssClasses">CSS 的字符串数组。</param>
+        /// <param name="cssClasses">The css classes.</param>
         public Css Add(IEnumerable<string> cssClasses) => Add(true, cssClasses);
 
         /// <summary>
-        /// 获取所有的 css 名称。
+        /// Gets the CSS classes.
         /// </summary>
         public IEnumerable<string> CssClasses => _cssBuilder;
 
         /// <summary>
-        /// 转换成以空格分隔的字符串。
+        /// Converts to string seperated by space for each items.
         /// </summary>
         public override string ToString()
         {
@@ -116,9 +116,12 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 执行从 <see cref="Css"/> 到 <see cref="CssClassCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="Css"/> to <see cref="CssClassCollection"/>.
         /// </summary>
-        /// <param name="css"><see cref=" Css"/> 实例。</param>
+        /// <param name="css">The CSS.</param>
+        /// <returns>
+        /// The result of the conversion.
+        /// </returns>
         public static implicit operator CssClassCollection(Css css)
             =>new CssClassCollection(css.CssClasses.Select(m=>m.ToString()));
     }

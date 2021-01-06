@@ -5,7 +5,7 @@ using System.Linq;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示用于快速构造样式表。
+    /// Repersents the style builder.
     /// </summary>
     public sealed class Style
     {
@@ -17,17 +17,19 @@ namespace YoiBlazor
         {
             _styleBuilder = new Dictionary<string, string>();
         }
-
         /// <summary>
-        /// 构造新的样式表。
+        /// Gets the create.
         /// </summary>
+        /// <value>
+        /// The create.
+        /// </value>
         public static Style Create => new Style();
 
         /// <summary>
-        /// 添加指定样式名称的值。
+        /// Adds the style by specified name and value.
         /// </summary>
-        /// <param name="name">样式名称。</param>
-        /// <param name="value">样式的值。</param>
+        /// <param name="name">The name of style.</param>
+        /// <param name="value">The value of the name.</param>
         public Style Add(string name,string value)
         {
             if (!_styleBuilder.ContainsKey(name))
@@ -42,12 +44,11 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加满足指定条件的样式名称的值。
+        /// Adds the style by specified name and value that satisfied given condition.
         /// </summary>
-        /// <param name="condition"><c>true</c> 表示满足条件。</param>
-        /// <param name="name">样式名称。</param>
-        /// <param name="value">样式的值。</param>
-        /// <returns></returns>
+        /// <param name="condition">The condition.</param>
+        /// <param name="name">The name of style.</param>
+        /// <param name="value">The value of the name.</param>
         public Style Add(bool condition,string name,string value)
         {
             if (condition)
@@ -58,11 +59,10 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加满足指定条件的 <see cref="StyleCollection"/> 实例。
+        /// Adds the style by specified <see cref="StyleCollection"/> instance that satisfied condition.
         /// </summary>
-        /// <param name="condition"><c>true</c> 表示满足条件。</param>
-        /// <param name="styles"><see cref="StyleCollection"/> 实例。</param>
-        /// <exception cref="ArgumentNullException"><paramref name="styles"/> 是 <c>null</c>。</exception>
+        /// <param name="condition">The condition should be satisfiled.</param>
+        /// <param name="styles">The instance of <see cref="StyleCollection"/> class.</param>
         public Style Add(bool condition,StyleCollection styles)
         {
             if (styles is null)
@@ -78,28 +78,26 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加指定 <see cref="StyleCollection"/> 实例。
+        /// Adds the style by specified <see cref="StyleCollection"/> instance.
         /// </summary>
-        /// <param name="styles"><see cref="StyleCollection"/> 实例。</param>
+        /// <param name="styles">The instance of <see cref="StyleCollection"/> class.</param>
         public Style Add(StyleCollection styles)
             => Add(true, styles);
 
         /// <summary>
-        /// 获取所有的样式表。
+        /// Gets the styles.
         /// </summary>
         public IEnumerable<KeyValuePair<string, string>> Styles => _styleBuilder;
-
         /// <summary>
-        /// 执行 <see cref="Style"/> 到 <see cref="StyleCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="Style"/> to <see cref="StyleCollection"/>.
         /// </summary>
-        /// <param name="style"><see cref="Style"/> 实例。</param>
-        public static implicit operator StyleCollection(Style style)
-        {
-            return new StyleCollection(style.Styles);
-        }
-
+        /// <param name="style">The style.</param>
+        /// <returns>
+        /// The result of the conversion.
+        /// </returns>
+        public static implicit operator StyleCollection(Style style) => new StyleCollection(style.Styles);
         /// <summary>
-        /// 转换成 style 构成的样式字符串。
+        /// Converts to string seperated by semicolon for each item.
         /// </summary>
         /// <returns>
         /// A <see cref="System.String" /> that represents this instance.

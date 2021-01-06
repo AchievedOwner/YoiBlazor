@@ -6,14 +6,14 @@ using System.Linq;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示组件元素的内联样式集合。
+    /// Represents a group of style.
     /// </summary>
     public class StyleCollection : IReadOnlyDictionary<string,string>,IEnumerable<string>,IEnumerable<KeyValuePair<string,string>>
     {
         private readonly Dictionary<string,string> stylesCollection;
 
         /// <summary>
-        /// 初始化 <see cref="StyleCollection"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="StyleCollection"/> class.
         /// </summary>
         public StyleCollection()
         {
@@ -21,18 +21,18 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 初始化 <see cref="StyleCollection"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="StyleCollection"/> class.
         /// </summary>
-        /// <param name="styles">键值对数组。</param>
+        /// <param name="styles">The styles.</param>
         public StyleCollection((string name, string value)[] styles):this(styles.Select(m => new KeyValuePair<string, string>(m.name, m.value)))
         {
 
         }
 
         /// <summary>
-        /// 初始化 <see cref="StyleCollection"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="StyleCollection"/> class.
         /// </summary>
-        /// <param name="styles">可迭代的键值对。</param>
+        /// <param name="styles">The styles.</param>
         public StyleCollection(IEnumerable<KeyValuePair<string, string>> styles)
         {
             stylesCollection = new Dictionary<string, string>(styles.Count());
@@ -52,22 +52,26 @@ namespace YoiBlazor
         public IEnumerable<string> Values => stylesCollection.Values;
 
         /// <summary>
-        /// 获取样式的键值对。
+        /// Gets the styles.
         /// </summary>
+        /// <value>
+        /// The styles.
+        /// </value>
         public IEnumerable<KeyValuePair<string, string>> Styles => stylesCollection;
 
         /// <summary>
-        /// 获取样式表的数量。
+        /// Gets the number of elements in the collection.
         /// </summary>
         public int Count => stylesCollection.Count;
 
         /// <summary>
-        /// 获取或设置指定样式名称的值。
+        /// Gets or sets the <see cref="System.String"/> with the specified name.
         /// </summary>
-        /// <param name="name">样式的名称。</param>
-        /// <returns>
-        /// 指定样式名称的值或 <c>null</c>。
-        /// </returns>
+        /// <value>
+        /// The <see cref="System.String"/>.
+        /// </value>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public string this[string name]
         {
             get
@@ -92,13 +96,13 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 执行样式字符串 <see cref="System.String"/> 到 <see cref="StyleCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="StyleCollection"/>.
         /// </summary>
-        /// <param name="styles">内联样式字符串。</param>
+        /// <param name="styles">The styles string, the format like 'key:value; key:value...'</param>
         /// <returns>
-        /// 转换的结果。
+        /// The result of the conversion.
         /// </returns>
-        /// <exception cref="InvalidOperationException">不符合样式表的语法格式。</exception>
+        /// <exception cref="InvalidOperationException"></exception>
         public static implicit operator StyleCollection(string styles)
         {
             try
@@ -113,13 +117,13 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 执行键值对数组到 <see cref="StyleCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="System.ValueTuple{System.String, System.String}[]"/> to <see cref="StyleCollection"/>.
         /// </summary>
-        /// <param name="styles">键值对数组。</param>
+        /// <param name="styles">The styles.</param>
         /// <returns>
-        /// 转换的结果。
+        /// The result of the conversion.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="styles"/> 是 null。</exception>
+        /// <exception cref="ArgumentNullException">styles</exception>
         public static implicit operator StyleCollection((string name, string value)[] styles)
         {
             if (styles is null)
@@ -131,13 +135,13 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 执行键值对数组到 <see cref="StyleCollection"/> 的隐式转换。
+        /// Performs an implicit conversion from <see cref="KeyValuePair{System.String, System.String}[]"/> to <see cref="StyleCollection"/>.
         /// </summary>
-        /// <param name="styles">键值对数组。</param>
+        /// <param name="styles">The styles.</param>
         /// <returns>
-        /// 转换的结果。
+        /// The result of the conversion.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="styles"/> 是 null。</exception>
+        /// <exception cref="ArgumentNullException">styles</exception>
         public static implicit operator StyleCollection(KeyValuePair<string,string>[] styles)
         {
             if (styles is null)
@@ -149,10 +153,10 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 转换成字符串。
+        /// Converts to string seperated by semicolmn for each item.
         /// </summary>
         /// <returns>
-        /// 一个格式为：{Key}:{Value};{Key}:{Value}... 的字符串。
+        /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {

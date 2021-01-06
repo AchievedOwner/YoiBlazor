@@ -12,12 +12,15 @@ using Microsoft.JSInterop;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 表示 Blazor 组件的基类。这是一个抽象类。
+    /// Represents the base class for blazor component.
     /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Components.ComponentBase" />
+    /// <seealso cref="YoiBlazor.IBlazorComponent" />
+    /// <seealso cref="YoiBlazor.IStateChangeHandler" />
     public abstract class BlazorComponentBase : ComponentBase, IBlazorComponent, IStateChangeHandler
     {
         /// <summary>
-        /// 初始化 <see cref="BlazorComponentBase"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="BlazorComponentBase"/> class.
         /// </summary>
         protected BlazorComponentBase()
         {
@@ -29,42 +32,42 @@ namespace YoiBlazor
         private readonly Css _cssBuilder;
         private readonly Style _styleBuilder;
 
-        #region 参数
+        #region Prameters        
         /// <summary>
-        /// 设置在组件当前所有类样式的基础上进行追加的样式。
+        /// Gets or sets the additional CSS class.
         /// </summary>
         [Parameter]public CssClassCollection AdditionalCssClass { get; set; }
 
         /// <summary>
-        /// 设置组件的 class 类名称并覆盖组件的所有样式。
+        /// Gets or sets the CSS class.
         /// </summary>
         [Parameter] public CssClassCollection CssClass { get; set; }
 
         /// <summary>
-        /// 设置追加的样式，不会覆盖内置样式。
+        /// Gets or sets the additional styles.
         /// </summary>
         [Parameter]public StyleCollection AdditionalStyles { get; set; }
 
         /// <summary>
-        /// 设置自定义的内联样式，并覆盖其他的内置样式。
+        /// Gets or sets the styles.
         /// </summary>
         [Parameter] public StyleCollection Styles { get; set; }
 
         /// <summary>
-        /// 设置将该控件或元素中出现的属性进行合并。
+        /// Gets or sets the additional attributes.
         /// </summary>
         [Parameter(CaptureUnmatchedValues = true)]public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
 
         #endregion
 
         /// <summary>
-        /// 获取 <see cref="IJSRuntime"/> 的服务。
+        /// Gets or sets the instance of <see cref="IJSRuntime"/>.
         /// </summary>
         [Inject] protected IJSRuntime JS { get; set; }
 
         private ElementReference _elementRef;
         /// <summary>
-        /// 获取当前组件的元素引用。
+        /// Gets or sets the element reference.
         /// </summary>
         public ElementReference ElementRef
         {
@@ -72,29 +75,23 @@ namespace YoiBlazor
             protected set => _elementRef = value;
         }
 
+        /// <summary>
+        /// Gets or sets the get element reference.
+        /// </summary>
         private Func<ElementReference> GetElementRef { get; set; }
 
         /// <summary>
-        /// 获取或设置是否自动加载元素的引用。
+        /// Gets or sets a value indicating whether should set the <see cref="ElementRef"/> automaticly.
         /// </summary>
         protected bool AutoElementReferece { get; set; }
 
+        #region Public
         /// <summary>
-        /// 创建组件所需要的 class 类。
+        /// Builds the CSS class string.
         /// </summary>
-        /// <param name="css"><see cref="Css"/> 实例。</param>
-        protected virtual void CreateComponentCssClass(Css css) { }
-
-        /// <summary>
-        /// 创建组件所需要的 style 样式。
-        /// </summary>
-        /// <param name="style"><see cref="Style"/> 实例。</param>
-        protected virtual void CreateComponentStyle(Style style) { }
-
-        /// <summary>
-        /// 构造组件的 class 样式名称并用空格连接的字符串。
-        /// </summary>
-        /// <returns>用空格分割的样式字符串。</returns>
+        /// <returns>
+        /// The string of CSS class seperated by space for each of items.
+        /// </returns>
         public virtual string BuildCssClassString()
         {
             if (AdditionalAttributes.TryGetValue("class", out object cssClass))
@@ -125,9 +122,11 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 构造组件的 style 的值并用“;”连接。
+        /// Builds the styles string.
         /// </summary>
-        /// <returns>用分号隔开的 style 样式。</returns>
+        /// <returns>
+        /// The string of styles seperated by semicolon(;) for each of items.
+        /// </returns>
         public virtual string BuildStylesString()
         {
             if (AdditionalAttributes.TryGetValue("style", out object style))
@@ -153,13 +152,31 @@ namespace YoiBlazor
             }
             return _styleBuilder.ToString();
         }
-        #region 子类用的方法定义
 
         /// <summary>
-        /// 添加在 <see cref="RenderTreeBuilder"/> 中构造元素的 class 属性。
+        /// Notifies the state of component has changed, When applicable, this will cause the component to be re-rendered.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
-        /// <param name="sequence">系列号。</param>
+        public virtual void NotifyStateChanged() => StateHasChanged();
+        #endregion
+
+        #region Protected
+        /// <summary>
+        /// Override to create the CSS class that component need.
+        /// </summary>
+        /// <param name="css">The instance of <see cref="Css"/> class.</param>
+        protected virtual void CreateComponentCssClass(Css css) { }
+
+        /// <summary>
+        /// Override to create the CSS class that component need.
+        /// </summary>
+        /// <param name="style">The instance of <see cref="Style"/> class.</param>
+        protected virtual void CreateComponentStyle(Style style) { }
+
+        /// <summary>
+        /// Adds the CSS class attribute.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        /// <param name="sequence">The sequence.</param>
         protected virtual void AddCssClassAttribute(RenderTreeBuilder builder, int sequence = 999990)
         {
             var cssClass = BuildCssClassString();
@@ -170,10 +187,10 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加在 <see cref="RenderTreeBuilder"/> 中构造元素的 style 属性。
+        /// Adds the style attribute.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
-        /// <param name="sequence">系列号。</param>
+        /// <param name="builder">The builder.</param>
+        /// <param name="sequence">The sequence.</param>
         protected virtual void AddStyleAttribute(RenderTreeBuilder builder, int sequence = 999991)
         {
             var styles = BuildStylesString();
@@ -184,31 +201,28 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加在 <see cref="RenderTreeBuilder"/> 中构造元素未被明确定义的其他属性。
+        /// Adds the addtional attributes.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
-        /// <param name="sequence">系列号。</param>
+        /// <param name="builder">The builder.</param>
+        /// <param name="sequence">The sequence.</param>
         protected virtual void AddAddtionalAttributes(RenderTreeBuilder builder, int sequence = 99992)
         {
             builder.AddMultipleAttributes(sequence, AdditionalAttributes);
         }
 
         /// <summary>
-        /// 添加在 <see cref="RenderTreeBuilder"/> 中对元素的引用。
-        /// <para>
-        /// <see cref="ElementRef"/> 在调用方法后可获取值。
-        /// </para>
+        /// Adds the element reference.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
-        /// <param name="sequence">系列号。</param>
+        /// <param name="builder">The builder.</param>
+        /// <param name="sequence">The sequence.</param>
         protected virtual void AddElementReference(RenderTreeBuilder builder, int sequence = 99993) 
             => builder.AddElementReferenceCapture(sequence, el => _elementRef = el);
 
         /// <summary>
-        /// 添加在 <see cref="RenderBatchBuilder"/> 中对组件的元素引用。
+        /// Adds the component reference.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
-        /// <param name="sequence">系列号。</param>
+        /// <param name="builder">The builder.</param>
+        /// <param name="sequence">The sequence.</param>
         protected virtual void AddComponentReference(RenderTreeBuilder builder, int sequence = 99994)
         {
             builder.AddComponentReferenceCapture(sequence, component =>
@@ -221,9 +235,9 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加构造 <see cref="RenderTreeBuilder"/> 的公共的属性，包括 class、style、id 和 AdditionalAttributes。
+        /// Adds the common attributes including 'class' 'style' 'additinal atrributes' etc.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
+        /// <param name="builder">The builder.</param>
         protected virtual void AddCommonAttributes(RenderTreeBuilder builder)
         {
             AddCssClassAttribute(builder);
@@ -233,20 +247,17 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加通用的其他特性。会在 <see cref="AddCommonAttributes(RenderTreeBuilder)"/> 调用。
-        /// <para>
-        /// 可以通过重写该方法来添加额外的特性。
-        /// </para>
+        /// Adds the extra common attributes.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
-        /// <param name="sequence">序列号。</param>
+        /// <param name="builder">The builder.</param>
+        /// <param name="sequence">The sequence.</param>
         protected virtual void AddExtraCommonAttributes(RenderTreeBuilder builder, int sequence = 99500) { }
 
         /// <summary>
-        /// 添加 <see cref="IHasChildContent.ChildContent"/> 的参数。
+        /// Adds the content of the child that implemented by <see cref="IHasChildContent"/>.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
-        /// <param name="sequence">序列号。</param>
+        /// <param name="builder">The builder.</param>
+        /// <param name="sequence">The sequence.</param>
         protected virtual void AddChildContent(RenderTreeBuilder builder,int sequence=100)
         {
             if(this is IHasChildContent childContent)
@@ -256,9 +267,9 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 添加标记了 <see cref="HtmlTagPropertyAttribute"/> 的属性。
+        /// Adds the HTML tag properties.
         /// </summary>
-        /// <param name="builder"><see cref="RenderTreeBuilder"/> 实例。</param>
+        /// <param name="builder">The builder.</param>
         protected virtual void AddHtmlTagProperties(RenderTreeBuilder builder)
         {
             var properties = GetType().GetProperties().Where(m => m.CanRead);
@@ -285,7 +296,6 @@ namespace YoiBlazor
                 }
             }
         }
-        #endregion
 
         /// <summary>
         /// Renders the component to the supplied <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" />.
@@ -293,13 +303,12 @@ namespace YoiBlazor
         /// <param name="builder">A <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" /> that will receive the render output.</param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
-
             var componentType = GetType();
 
             var element = componentType.GetCustomAttribute<HtmlTagAttribute>(true);
             if (element != null)
             {
-                builder.OpenElement(0, element.ElementName);
+                builder.OpenElement(0, element.TagName);
                 AddCommonAttributes(builder);
                 AddHtmlTagProperties(builder);
                 AddChildContent(builder, 888);
@@ -309,17 +318,16 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 获取从接口中定义了 <see cref="CssClassAttribute"/> 特性的参数。
+        /// Gets the CSS class from attribute.
         /// </summary>
-        /// <returns></returns>
         protected virtual void GetCssClassFromAttribute()
         {
-            var cssClassDic = new Dictionary<string, int>();// class 名称, 顺序
+            var cssClassDic = new Dictionary<string, int>();// class name, order
 
-            //获取接口
+            //get all interfaces
             var interfaces = this.GetType().GetInterfaces();
 
-            //接口定义了 CssClassAttribute
+            //find the interfaces that defined CssClassAttribute
             interfaces.Where(instance => instance.IsDefined(typeof(CssClassAttribute), true))
                 .Select(m => m.GetCustomAttribute<CssClassAttribute>(true))
                 .OrderBy(instance => instance.Order)
@@ -329,7 +337,7 @@ namespace YoiBlazor
                     TryAddCssClassDic(cssClassDic, item);
                 });
 
-            //类定义了 CssClassAttribute
+            //class defined CssClassAttribute
             if (this.GetType().IsDefined(typeof(CssClassAttribute)))
             {
                 var classCssClassAttribute = this.GetType().GetCustomAttribute<CssClassAttribute>();
@@ -337,17 +345,17 @@ namespace YoiBlazor
             }
 
 
-            //接口的属性
+            //get the properties in interfaces
             var interfaceProperties = interfaces.SelectMany(type => type.GetProperties());
 
-            // 类的属性有 CssClassAttribute
+            // the properties of class defined CssClassAttribute
             var classProperties = this.GetType().GetProperties();
 
             var properties = new List<PropertyInfo>();
 
             foreach (var classProp in classProperties)
             {
-                if (IdentifyCssClassProperty(classProp)) //类的属性定义了 CssClassAttribute 则忽略接口的 CssClassAttribute
+                if (IdentifyCssClassProperty(classProp)) //if property in class defined CssClassAttribute should override the value of CssClassAttribute defined by interface.
                 {
                     properties.Add(classProp);
                 }
@@ -363,12 +371,13 @@ namespace YoiBlazor
 
             ResolveCssClassProperties(properties, cssClassDic);
 
-            //排序 去重
+            //reorder, distinction
             var cssClassArray = cssClassDic.OrderBy(m => m.Value).Select(m => m.Key).Distinct();
 
             _cssBuilder.Add(cssClassArray.ToArray());
         }
 
+        #endregion
         /// <summary>
         /// Resolves the property to CSS class dic.
         /// </summary>
@@ -378,12 +387,12 @@ namespace YoiBlazor
         {
             foreach (var property in properties.Where(property=>IdentifyCssClassProperty(property)))
             {
-                if (!property.CanRead) //必须要有 get
+                if (!property.CanRead) //shold be get
                 {
                     return;
                 }
 
-                var value = property.GetValue(this);//属性的值
+                var value = property.GetValue(this);//value of property
 
                 if (!TryGetCssClassAttribute(property, out CssClassAttribute cssClassAttribute))
                 {
@@ -392,21 +401,21 @@ namespace YoiBlazor
 
                 var cssClassName = cssClassAttribute.Value?.ToString();
 
-                if (value == null) //若属性是 null，判断是否有 NullCssClassAttribute
+                if (value == null) //null value，has NullCssClassAttribute
                 {
                     if (TryGetCssClassAttribute(property, out NullCssClassAttribute nullCssClassAttribute))
                     {
                         TryAddCssClassDic(cssClassDic, nullCssClassAttribute);
                     }
                 }
-                else // 属性有值
+                else // not null value
                 {
 
-                    if (value.GetType() == typeof(bool)) //布尔值，则会选择使用 CssClassAttrbute 或  BooleanCssClassAttribute
+                    if (value.GetType() == typeof(bool)) //bool type，choose CssClassAttrbute or BooleanCssClassAttribute
                     {
                         var boolValue = (bool)value;
 
-                        //识别 BooleanCssClassAttibute
+                        //identified BooleanCssClassAttibute
                         if (TryGetCssClassAttribute(property, out BooleanCssClassAttribute boolCssClassAttribute))
                         {
                             if (boolValue)
@@ -415,21 +424,23 @@ namespace YoiBlazor
                             }
                             else
                             {
-                                TryAddCssClassDic(cssClassDic, boolCssClassAttribute.FaleCssClass);
+                                TryAddCssClassDic(cssClassDic, boolCssClassAttribute.FalseCssClass);
                             }
                         }
-                        else if (boolValue) //兼容 CssClassAttribute 但只有 true 时有效
+                        else if (boolValue) //if true by has CssClassAttribute
                         {
                             TryAddCssClassDic(cssClassDic, cssClassAttribute);
                         }
                     }
-                    else // CssClassAttribute 将会连接属性的值一起组成新的 css 名称
+                    else // combine the value of CssClassAttribute and the value of property to be the CSS class
                     {
-                        // CssClassCollection 类型，结合 CssClassAttribute，并为每一个 CssClassCollection 的值都追加 CssClass 的值。
+                        /* if property is CssClassCollection，and defined CssClassAttribute，so append the value of css class by each items.
+                         *
+                         */
                         if (value.GetType() == typeof(CssClassCollection) || value.GetType().BaseType == typeof(CssClassCollection)) 
                         {
                             var cssCollection = value as CssClassCollection;
-                            if (cssClassAttribute.Suffix)
+                            if (cssClassAttribute.Suffix)//be suffix
                             {
                                 cssClassName = string.Join(" ", cssCollection.CssClasses.Select(m=>$"{m}{cssClassName}"));
                             }
@@ -440,17 +451,17 @@ namespace YoiBlazor
                         }
                         else
                         {
-                            if (value.GetType().BaseType == typeof(Enum))//如果是枚举，要将枚举项和 CssClass 连起来使用
+                            if (value.GetType().BaseType == typeof(Enum))//enum，combine the item of enum and CssClassAttrbute
                             {
                                 var enumFieldCssClass = value.GetEnumCssClass();
                                 value = enumFieldCssClass;
                             }
-                            else if (typeof(CssClass).IsAssignableFrom(value.GetType())) // 是 CssClass 类型
+                            else if (typeof(CssClass).IsAssignableFrom(value.GetType())) //  CssClass type
                             {
                                 value = (value as CssClass)?.ToString();
                             }
 
-                            if (cssClassAttribute.Suffix) //后缀属性的 CssClassAttrbute
+                            if (cssClassAttribute.Suffix) //suffix CssClassAttrbute
                             {
                                 cssClassName = $"{value}{cssClassName}";
                             }
@@ -467,12 +478,12 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 尝试从反射的属性中获取指定的特性类型。
+        /// Tries the get CSS class attribute from property.
         /// </summary>
-        /// <typeparam name="TAttribute">特性类型。</typeparam>
-        /// <param name="property">属性对象。</param>
-        /// <param name="attribute">返回获取到的特性类型。</param>
-        /// <returns>若获取成功，则返回 <c>true</c>；否则返回 <c>false</c>。</returns>
+        /// <typeparam name="TAttribute">The type of the attribute.</typeparam>
+        /// <param name="property">The property.</param>
+        /// <param name="attribute">The attribute.</param>
+        /// <returns></returns>
         private static bool TryGetCssClassAttribute<TAttribute>(PropertyInfo property, out TAttribute attribute)
             where TAttribute : CssClassAttribute
         {
@@ -538,7 +549,7 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 解析具有 <see cref="StyleAttribute"/> 特性的参数。
+        /// Resolves the style attribute.
         /// </summary>
         protected virtual void ResolveStyleAttribute()
         {
@@ -564,20 +575,15 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// 识别属性是内部支持的 CSS 属性。
+        /// Identifies the CSS class property.
         /// </summary>
-        /// <param name="property">要识别的属性。</param>
+        /// <param name="property">The property.</param>
         /// <returns></returns>
-        private bool IdentifyCssClassProperty(PropertyInfo property)
+        private static bool IdentifyCssClassProperty(PropertyInfo property)
         {
             return property.IsDefined(typeof(CssClassAttribute), true);
         }
 
-
-        /// <summary>
-        /// 通知组件其状态已更改。在适用的情况下，这将导致组件被重新呈现。
-        /// </summary>
-        public virtual void NotifyStateChanged() => StateHasChanged();
 
         
     }

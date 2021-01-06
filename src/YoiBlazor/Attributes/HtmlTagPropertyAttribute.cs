@@ -4,23 +4,24 @@ using System.ComponentModel;
 namespace YoiBlazor
 {
     /// <summary>
-    /// 定义参数在渲染时的元素属性名称并将参数的值作为元素属性的值。
+    /// Represents the attribute in HTML tag after render.
     /// </summary>
-    /// <seealso cref="System.Attribute" />
+    /// <seealso cref="System.ComponentModel.DefaultValueAttribute" />
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class HtmlTagPropertyAttribute : DefaultValueAttribute
     {
         /// <summary>
-        /// 使用当前参数的名称作为元素属性的名称初始化 <see cref="HtmlTagPropertyAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="HtmlTagPropertyAttribute"/> class using the same name of property.
         /// </summary>
         public HtmlTagPropertyAttribute() : this(null)
         {
 
         }
+
         /// <summary>
-        /// 使用指定名称作为元素属性的名称初始化 <see cref="HtmlTagPropertyAttribute"/> 类的新实例。
+        /// Initializes a new instance of the <see cref="HtmlTagPropertyAttribute"/> class by given name.
         /// </summary>
-        /// <param name="name">元素属性的名称。</param>
+        /// <param name="name">The name of attribute in HTML tag.</param>
         public HtmlTagPropertyAttribute(string name) : base(name)
         {
 

@@ -6,26 +6,27 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace YoiBlazor
 {
-
     /// <summary>
-    /// 表示嵌套组件的子组件的基类。这是一个抽象类。
+    /// Represents the the child component class.
     /// </summary>
-    /// <typeparam name="TParentComponent">父组件的类型。</typeparam>
+    /// <typeparam name="TParentComponent">The type of the parent component.</typeparam>
+    /// <seealso cref="YoiBlazor.BlazorComponentBase" />
+    /// <seealso cref="YoiBlazor.IHasChildContent" />
     public abstract class ChildBlazorComponentBase<TParentComponent> : BlazorComponentBase,IHasChildContent
         where TParentComponent : ParentBlazorComponentBase<TParentComponent>
     {
         /// <summary>
-        /// 获取级联的父组件。
+        /// Gets or sets the parent component.
         /// </summary>
         [CascadingParameter]protected virtual TParentComponent Parent { get; set; }
 
         /// <summary>
-        /// 设置组件的一段 UI 内容。
+        /// Sets the segment of UI content.
         /// </summary>
         [Parameter] public RenderFragment ChildContent { get; set; }
 
         /// <summary>
-        /// 设置呈现元素的名称。
+        /// Gets or sets the name of the element.
         /// </summary>
         [Parameter] public virtual string ElementName { get; set; } = "div";
 
@@ -37,7 +38,7 @@ namespace YoiBlazor
         {
             if (Parent == null)
             {
-                throw new ArgumentException($"子组件'{GetType().Name}'必须放在父组件'{Parent.GetType().Name}'中");
+                throw new ArgumentException($"The child component '{GetType().Name}' must create inside of '{Parent.GetType().Name}' component");
             }
 
             base.OnInitialized();

@@ -1,0 +1,77 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">YoiBlazor.Bootstrap.BlazorServer</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <Nav Vertical="true">
+        <NavItem>
+            <NavItemLink Href="/" Match="NavLinkMatch.All">
+                首页
+            </NavItemLink>
+        </NavItem>
+        <NavItem>
+            <NavItemLink>
+                <h5>元素</h5>
+            </NavItemLink>
+            <Nav Vertical="true">
+                <NavItem>
+                    <NavItemLink Href="/element/button" Match="NavLinkMatch.All">
+                        按钮(Button)
+                    </NavItemLink>
+                </NavItem>
+            </Nav>
+        </NavItem>
+        <NavItem>
+            <NavItemLink>
+                <h5>布局</h5>
+            </NavItemLink>
+            <Nav Vertical="true">
+                <NavItem>
+                    <NavItemLink Href="/layout/container" Match="NavLinkMatch.All">
+                        容器(Container)
+                    </NavItemLink>
+                </NavItem>
+            </Nav>
+        </NavItem>
+        <NavItem>
+            <NavItemLink>
+                <h5>组件</h5>
+            </NavItemLink>
+            <Nav Vertical="true">
+                <NavItem>
+                    <NavItemLink Href="/component/tab" Match="NavLinkMatch.All">
+                        选项卡(Tab)
+                    </NavItemLink>
+                </NavItem>
+            </Nav>
+        </NavItem>
+        <NavItem>
+            <NavItemLink>
+                <h5>工具</h5>
+            </NavItemLink>
+            <Nav Vertical="true">
+                <NavItem>
+                    <NavItemLink Href="/util/border" Match="NavLinkMatch.All">
+                        边框(Border)
+                    </NavItemLink>
+                </NavItem>
+            </Nav>
+        </NavItem>
+    </Nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
