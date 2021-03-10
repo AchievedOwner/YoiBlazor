@@ -23,8 +23,17 @@ public class Container : BlazorComponentBase, IHasChildContent
 ```
 
 
-## Installation(v2.1.0)
+## Installation
 > Install-Package YoiBlazor
 
 
 ### [See Document](https://github.com/AchievedOwner/YoiBlazor/wiki)
+
+# Changelogs
+
+### 2.2
+* [new]The extension method `BuildCascadingValueComponent` of `RenderTreeBuilder`
+* [update]Change the method `AddStyleAttribute` & `AddCssClassAttribute` to be the extension of `IBlazorComponent`
+* [update]Downgrade to `.NET Standard 2.0`
+* [fix]Missing auto element reference
+* [fix]Error summaries and comments.

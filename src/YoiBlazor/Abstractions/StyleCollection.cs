@@ -117,7 +117,7 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="System.ValueTuple{System.String, System.String}[]"/> to <see cref="StyleCollection"/>.
+        /// Performs an implicit conversion from System.ValueTuple&lt;System.String, System.String>[] to <see cref="StyleCollection"/>.
         /// </summary>
         /// <param name="styles">The styles.</param>
         /// <returns>
@@ -135,7 +135,7 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="KeyValuePair{System.String, System.String}[]"/> to <see cref="StyleCollection"/>.
+        /// Performs an implicit conversion from KeyValuePair&lt;System.String, System.String>[] to <see cref="StyleCollection"/>.
         /// </summary>
         /// <param name="styles">The styles.</param>
         /// <returns>

@@ -125,7 +125,7 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="System.Object[]"/> to <see cref="CssClassCollection"/>.
+        /// Performs an implicit conversion from System.Object[] to <see cref="CssClassCollection"/>.
         /// </summary>
         /// <param name="cssClass">The CSS class.</param>
         /// <returns>
@@ -155,7 +155,7 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="CssClass[]"/> to <see cref="CssClassCollection"/>.
+        /// Performs an implicit conversion from CssClass[] to <see cref="CssClassCollection"/>.
         /// </summary>
         /// <param name="cssClass">The CSS class.</param>
         /// <returns>

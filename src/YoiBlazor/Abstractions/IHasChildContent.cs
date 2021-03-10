@@ -15,7 +15,7 @@ namespace YoiBlazor
     }
 
     /// <summary>
-    /// Represents the component could has the UI content of child with type of <see cref="TValue"/>.
+    /// Represents the component could has the UI content of child with type of <typeparamref name="TValue"/>.
     /// </summary>
     /// <typeparam name="TValue">The type of the value.</typeparam>
     /// <seealso cref="YoiBlazor.IBlazorComponent" />

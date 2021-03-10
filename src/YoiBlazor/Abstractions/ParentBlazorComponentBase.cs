@@ -47,11 +47,7 @@ namespace YoiBlazor
         {
             builder.OpenElement(0, ElementName);
             AddCommonAttributes(builder);
-            builder.OpenComponent<CascadingValue<TParentComponent>>(100);
-            builder.AddAttribute(101, "Value", this);
-            builder.AddAttribute(102, nameof(ChildContent), ChildContent);
-            builder.CloseComponent();
-
+            builder.BuildCascadingValueComponent<TParentComponent>(this, ChildContent);
             builder.CloseElement();
         }
 

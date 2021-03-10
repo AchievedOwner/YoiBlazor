@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
@@ -172,39 +171,12 @@ namespace YoiBlazor
         /// <param name="style">The instance of <see cref="Style"/> class.</param>
         protected virtual void CreateComponentStyle(Style style) { }
 
-        /// <summary>
-        /// Adds the CSS class attribute.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <param name="sequence">The sequence.</param>
-        protected virtual void AddCssClassAttribute(RenderTreeBuilder builder, int sequence = 999990)
-        {
-            var cssClass = BuildCssClassString();
-            if (!string.IsNullOrEmpty(cssClass))
-            {
-                builder.AddAttribute(sequence, "class", cssClass);
-            }
-        }
-
-        /// <summary>
-        /// Adds the style attribute.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <param name="sequence">The sequence.</param>
-        protected virtual void AddStyleAttribute(RenderTreeBuilder builder, int sequence = 999991)
-        {
-            var styles = BuildStylesString();
-            if (!string.IsNullOrEmpty(styles))
-            {
-                builder.AddAttribute(sequence, "style", styles);
-            }
-        }
 
         /// <summary>
         /// Adds the addtional attributes.
         /// </summary>
         /// <param name="builder">The builder.</param>
-        /// <param name="sequence">The sequence.</param>
+        /// <param name="sequence"> An integer that represents the position of the instruction in the source code.</param>
         protected virtual void AddAddtionalAttributes(RenderTreeBuilder builder, int sequence = 99992)
         {
             builder.AddMultipleAttributes(sequence, AdditionalAttributes);
@@ -214,7 +186,7 @@ namespace YoiBlazor
         /// Adds the element reference.
         /// </summary>
         /// <param name="builder">The builder.</param>
-        /// <param name="sequence">The sequence.</param>
+        /// <param name="sequence"> An integer that represents the position of the instruction in the source code.</param>
         protected virtual void AddElementReference(RenderTreeBuilder builder, int sequence = 99993) 
             => builder.AddElementReferenceCapture(sequence, el => _elementRef = el);
 
@@ -222,7 +194,7 @@ namespace YoiBlazor
         /// Adds the component reference.
         /// </summary>
         /// <param name="builder">The builder.</param>
-        /// <param name="sequence">The sequence.</param>
+        /// <param name="sequence"> An integer that represents the position of the instruction in the source code.</param>
         protected virtual void AddComponentReference(RenderTreeBuilder builder, int sequence = 99994)
         {
             builder.AddComponentReferenceCapture(sequence, component =>
@@ -235,13 +207,12 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// Adds the common attributes including 'class' 'style' 'additinal atrributes' etc.
+        /// Adds the common attributes including <c>class</c>, <c>style</c> and additional atrributes for this HTML tag.
         /// </summary>
-        /// <param name="builder">The builder.</param>
         protected virtual void AddCommonAttributes(RenderTreeBuilder builder)
         {
-            AddCssClassAttribute(builder);
-            AddStyleAttribute(builder);
+            this.AddCssClassAttribute(builder);
+            this.AddStyleAttribute(builder);
             AddAddtionalAttributes(builder);
             AddExtraCommonAttributes(builder);
         }
@@ -250,14 +221,14 @@ namespace YoiBlazor
         /// Adds the extra common attributes.
         /// </summary>
         /// <param name="builder">The builder.</param>
-        /// <param name="sequence">The sequence.</param>
+        /// <param name="sequence"> An integer that represents the position of the instruction in the source code.</param>
         protected virtual void AddExtraCommonAttributes(RenderTreeBuilder builder, int sequence = 99500) { }
 
         /// <summary>
         /// Adds the content of the child that implemented by <see cref="IHasChildContent"/>.
         /// </summary>
         /// <param name="builder">The builder.</param>
-        /// <param name="sequence">The sequence.</param>
+        /// <param name="sequence"> An integer that represents the position of the instruction in the source code..</param>
         protected virtual void AddChildContent(RenderTreeBuilder builder,int sequence=100)
         {
             if(this is IHasChildContent childContent)
@@ -265,6 +236,8 @@ namespace YoiBlazor
                 builder.AddContent(sequence, childContent.ChildContent);
             }
         }
+
+      
 
         /// <summary>
         /// Adds the HTML tag properties.
@@ -294,26 +267,6 @@ namespace YoiBlazor
 
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Renders the component to the supplied <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" />.
-        /// </summary>
-        /// <param name="builder">A <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" /> that will receive the render output.</param>
-        protected override void BuildRenderTree(RenderTreeBuilder builder)
-        {
-            var componentType = GetType();
-
-            var element = componentType.GetCustomAttribute<HtmlTagAttribute>(true);
-            if (element != null)
-            {
-                builder.OpenElement(0, element.TagName);
-                AddCommonAttributes(builder);
-                AddHtmlTagProperties(builder);
-                AddChildContent(builder, 888);
-
-                builder.CloseElement();
             }
         }
 
@@ -377,7 +330,35 @@ namespace YoiBlazor
             _cssBuilder.Add(cssClassArray.ToArray());
         }
 
+
+        /// <summary>
+        /// Resolves the style attribute.
+        /// </summary>
+        protected virtual void ResolveStyleAttribute()
+        {
+            GetType().GetProperties()
+                .Where(m => m.IsDefined(typeof(StyleAttribute), true))
+                .ToList()
+                .ForEach(property =>
+                {
+                    if (!property.CanRead)
+                    {
+                        return;
+                    }
+                    var styleAttribute = property.GetCustomAttribute<StyleAttribute>();
+                    if (styleAttribute != null)
+                    {
+                        var value = property.GetValue(this);
+                        if (value != null)
+                        {
+                            _styleBuilder.Add(styleAttribute.Name, value.ToString());
+                        }
+                    }
+                });
+        }
         #endregion
+
+        #region Private
         /// <summary>
         /// Resolves the property to CSS class dic.
         /// </summary>
@@ -549,32 +530,6 @@ namespace YoiBlazor
         }
 
         /// <summary>
-        /// Resolves the style attribute.
-        /// </summary>
-        protected virtual void ResolveStyleAttribute()
-        {
-            GetType().GetProperties()
-                .Where(m => m.IsDefined(typeof(StyleAttribute), true))
-                .ToList()
-                .ForEach(property=>
-                {
-                    if (!property.CanRead)
-                    {
-                        return;
-                    }
-                    var styleAttribute= property.GetCustomAttribute<StyleAttribute>();
-                    if (styleAttribute != null)
-                    {
-                        var value = property.GetValue(this);
-                        if (value != null)
-                        {
-                            _styleBuilder.Add(styleAttribute.Name, value.ToString());
-                        }
-                    }
-                });
-        }
-
-        /// <summary>
         /// Identifies the CSS class property.
         /// </summary>
         /// <param name="property">The property.</param>
@@ -583,8 +538,36 @@ namespace YoiBlazor
         {
             return property.IsDefined(typeof(CssClassAttribute), true);
         }
+        #endregion
+
+        #region Override
 
 
-        
+        /// <summary>
+        /// Renders the component to the supplied <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" />.
+        /// </summary>
+        /// <param name="builder">A <see cref="T:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder" /> that will receive the render output.</param>
+        protected override void BuildRenderTree(RenderTreeBuilder builder)
+        {
+            var componentType = GetType();
+
+            var element = componentType.GetCustomAttribute<HtmlTagAttribute>(true);
+            if (element != null)
+            {
+                builder.OpenElement(0, element.TagName);
+                AddCommonAttributes(builder);
+                AddHtmlTagProperties(builder);
+                if (AutoElementReferece)
+                {
+                    AddElementReference(builder);
+                }
+                AddChildContent(builder, 888);
+
+                builder.CloseElement();
+            }
+        }
+        #endregion
+
+
     }
 }
